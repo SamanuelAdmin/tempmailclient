@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="static/css/style.css">
+
+        <script src="static/js/loading.js"></script>
+        <script src="static/js/mailApiController.js"></script>
+
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="title">✉️ TempMail Service</div>
+            </div>
+
+            <div class="content">
+                {% block body %}
+                {% endblock %}
+            </div>
+
+{#            <div class="footer">#}
+{#                <a href="https://github.com/SamanuelAdmin/">Created by SamanuelAdmin</a>#}
+{#            </div>#}
+
+        </div>
+
+        <div id="loadingScreen" class="loading-screen" style="display: none;">
+            <p>Loading...</p>
+        </div>
+    </body>
+</html>

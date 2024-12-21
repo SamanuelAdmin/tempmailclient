@@ -1,0 +1,7 @@
+**/logs
+**/__pycache__
+.*/
+**/env
+**/venv
+**/test
+**/sqlite3.db
