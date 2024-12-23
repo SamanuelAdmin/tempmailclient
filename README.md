@@ -18,16 +18,19 @@ another hacker`s side.
 <li>Download project source code by
 ```
 git clone https://github.com/SamanuelAdmin/tempmailclient
-```</li>
+```
+</li>
 <li>Change current directory (<code>cd tempmailclient</code>)</li>
 <li>Make docker image via
 ```
 docker image build -t temp_mail_client .
-```</li>
+```
+</li>
 <li>Start docker container with command
 ```
 docker run -p 4999:4999 -d temp_mail_client
-```</li>
+```
+</li>
 </ul>
 <strong>Now your client is running and can be used via <code>127.0.0.1:4999</code></strong>
 
