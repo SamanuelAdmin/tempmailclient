@@ -9,6 +9,12 @@ Web interface of the client is starting locally, so you don't need to worry abou
 another hacker`s side.
 
 
+<h3>Has been used:</h3>
+<li><a href="https://python.org">Python >= 3.10</a></li>
+<li><a href="https://flask.palletsprojects.com/en/stable/">Flask == 3.1.0</a></li>
+<li><a href="https://www.sqlite.org/">SQLite</a> with <a href="https://www.sqlalchemy.org/">Sqlalchemy ORM</a></li>
+
+Also <a href="https://pypi.org/project/fake-useragent/">FakeUseragent</a>, <a href="https://pypi.org/project/Jinja2/">Jinja2</a> and <a href="https://pypi.org/project/requests/">Requests</a>.
 
 <h3>How to set up and use:</h3>
 
