@@ -74,6 +74,8 @@ class Controller:
                 )
             )
 
+            if email is None: return Response(status=404)
+
             emailPage = self.view.getEmailTemplate(
                 self.__app.jinja_env, email
             )

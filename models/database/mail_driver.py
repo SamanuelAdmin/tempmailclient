@@ -39,3 +39,4 @@ class MailDriver(Driver, IDatabaseDriver):
         self.getCurrentSession().delete(
             self.read(ID=_id)
         )
+        self.getCurrentSession().commit()

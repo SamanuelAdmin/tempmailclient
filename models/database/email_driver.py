@@ -31,7 +31,7 @@ class EmailDriver(Driver, IDatabaseDriver):
         if not condition is None: return allObjects.filter(condition).first()
         if not id is None: return allObjects.get(id)
         if not emailId is None: return allObjects.filter_by(emailId = emailId).first()
-        return allObjects.all()
+        return allObjects.order_by(Email.date.desc()).all()  # new one will be at the beginning
 
     def update(self):
         pass
@@ -41,4 +41,5 @@ class EmailDriver(Driver, IDatabaseDriver):
         self.getCurrentSession().delete(
             self.read(emailId=_id)
         )
+        self.getCurrentSession().commit()
 

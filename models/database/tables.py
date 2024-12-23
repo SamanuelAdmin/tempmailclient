@@ -27,7 +27,7 @@ class Email(Base):
     emailId = Column(Integer, nullable=False)
     frommail = Column(String(100), nullable=False)
     subject = Column(String(500), nullable=False)
-    date = Column(DateTime, nullable=True)
+    date = Column(DateTime(), nullable=True)
 
     body = Column(String, nullable=True)
 
@@ -57,7 +57,7 @@ class Email(Base):
         self.emailId = emailId
         self.frommail = frommail
         self.subject = subject
-        self.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S').date()
+        self.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
         self.body = body
         self.login = login
         self.domain = domain
