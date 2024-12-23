@@ -13,24 +13,14 @@ another hacker`s side.
 <h3>How to set up and use:</h3>
 
 <ul>
+
 <li><strong>Download and install docker</strong> (or/and docker desktop) from <a href="https://www.docker.com/">official website</a>.</li>
 <li>Run terminal (For windows - <code>Win+R</code> -> <code>cmd</code>).</li>
-<li>Download project source code by
-```
-git clone https://github.com/SamanuelAdmin/tempmailclient
-```
-</li>
+<li>Download project source code by <code>git clone https://github.com/SamanuelAdmin/tempmailclient</code></li>
 <li>Change current directory (<code>cd tempmailclient</code>)</li>
-<li>Make docker image via
-```
-docker image build -t temp_mail_client .
-```
-</li>
-<li>Start docker container with command
-```
-docker run -p 4999:4999 -d temp_mail_client
-```
-</li>
+<li>Make docker image via <code> docker image build -t temp_mail_client . </code></li>
+<li>Start docker container with command <code>docker run -p 4999:4999 -d temp_mail_client</code></li>
+
 </ul>
 <strong>Now your client is running and can be used via <code>127.0.0.1:4999</code></strong>
 
