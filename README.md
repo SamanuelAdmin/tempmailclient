@@ -1,5 +1,7 @@
 <h1>Temp mail client</h1>
 
+![photo_2024-12-23_22-31-03](https://github.com/user-attachments/assets/b81a79df-1dd9-46fa-ba24-95675c9b8b47)
+<br><br>
 
 Temp mail client is a simple and easy-to-use web application, 
 which uses free temp mails services for high level of confidence and privacy. Perfect for creating anonymous 
@@ -9,6 +11,7 @@ Web interface of the client is starting locally, so you don't need to worry abou
 another hacker`s side.
 
 
+<br>
 <h3>Has been used:</h3>
 <li><a href="https://python.org">Python >= 3.10</a></li>
 <li><a href="https://flask.palletsprojects.com/en/stable/">Flask == 3.1.0</a></li>
@@ -16,6 +19,7 @@ another hacker`s side.
 <br>
 Also <a href="https://pypi.org/project/fake-useragent/">FakeUseragent</a>, <a href="https://pypi.org/project/Jinja2/">Jinja2</a> and <a href="https://pypi.org/project/requests/">Requests</a>.
 
+<br><br>
 <h3>How to set up and use:</h3>
 
 <ul>
