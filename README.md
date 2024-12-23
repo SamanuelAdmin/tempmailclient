@@ -14,4 +14,7 @@ docker image build -t temp_mail_client .
 ```
 docker run -p 4999:4999 -d temp_mail_client
 ```
-<i> You can use any unoccupied port, just change it in last command. For example: </i>
+<strong>Now your client is running and can be used via <code>127.0.0.1:4999</code></strong>
+
+
+<i> You can easy change working port to any unoccupied, just change it in last command. For example: <code>docker run -p 80:4999 -d temp_mail_client</code></i>
