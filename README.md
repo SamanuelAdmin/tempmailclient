@@ -1,4 +1,16 @@
-How to set up and use:
+<h1>Temp mail client</h1>
+
+
+Temp mail client is a simple and easy-to-use web application, 
+which uses free temp mails services for high level of confidence and privacy. Perfect for creating anonymous 
+accounts with email verification or maintaining private correspondence via lots of mails.
+Also, you can use TempMailClient with Tor network to achieve maximum anonymity on the network.
+Web interface of the client is starting locally, so you don't need to worry about attack from
+another hacker`s side.
+
+
+
+<h3>How to set up and use:</h3>
 1) <strong>Download and install docker</strong> (or/and docker desktop) from <a href="https://www.docker.com/">official website</a>.
 2) Run terminal (For windows - <code>Win+R</code> -> <code>cmd</code>).
 3) Download project source code by
