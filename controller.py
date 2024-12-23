@@ -1,25 +1,22 @@
 # its a controller (from MVC pattern)
+import threading
+import time
+from io import BytesIO
 
-from itertools import chain # for list building
+from sqlalchemy import and_
 
-from flask import request, Response, redirect
+from flask import request, Response, redirect, send_file
 
 from models.mail_api_client import TempMailClient
 from views.view import View
-from models.database.driver import Driver
+from models.database.mail_driver import MailDriver
+from models.database.email_driver import EmailDriver
+from models.email_description import EmailDesc
+
+from models.database.tables import *
 
 # settings import
 from settings import *
-
-
-class Email:
-    def __init__(self, mail, emailData):
-        self.ID = emailData['id']
-        self.frommail = emailData['from']
-        self.subject = emailData['subject']
-        self.date = emailData['date']
-
-        self.login, self.domain = mail.split('@')
 
 
 class Controller:
@@ -28,56 +25,102 @@ class Controller:
         self.view = View()
 
         self.tempMailClient = TempMailClient()
-        self.databaseDriver = Driver()
+        self.mailDriver = MailDriver()
+        self.emailDriver = EmailDriver()
+
+        threading.Thread(
+            target=self.updateEmailData, daemon=True
+        ).start()
+
+
+    def updateEmailData(self, timeout=10):
+        while True:
+            mailList = self.mailDriver.read()
+
+            for mail in mailList:
+                for data in self.tempMailClient.checkMailbox(mail.mail):
+                    email = EmailDesc(mail.mail, data)
+
+                    if self.emailDriver.read(emailId=email.emailId) is None: # if it is new email
+                        print(f'Saving new email with ID {email.emailId}.')
+                        self.emailDriver.create(email)
+
+            time.sleep(timeout)
+
+
 
     def router(self):
         @self.__app.route('/')
         def index():
-            mailList = self.databaseDriver.read()
+            mailList = self.mailDriver.read()
+            emailsList = self.emailDriver.read()
 
-            # filters for emails
-            mailFilter = request.args.get('from')
-
-            if mailFilter:
-                emailsList = [Email(mailFilter, data) for data in self.tempMailClient.checkMailbox(mailFilter)]
-            else:
-                emailsList = list(
-                    chain.from_iterable(
-                        [Email(mail.mail, data) for data in self.tempMailClient.checkMailbox(mail.mail)] for mail in mailList
-                    )
-                )
+            return self.view.index(mailList, emailsList)
 
 
-            return self.view.index(mailList, emailsList, choosen=mailFilter)
-
-        @self.__app.route('/read')
-        def readPage():
-            mailList = self.databaseDriver.read()
-
+        @self.__app.route('/email/download')
+        def downloadEmail():
             mail = request.args.get('mail')
             emailId = request.args.get('id')
 
-            if not mail or not emailId:
-                return redirect('/')
+            if emailId is None or mail is None:
+                return Response(status=400)
 
-            emailDetails = self.tempMailClient.readMessage(mail, int(emailId))
-            email2read = Email( mail, emailDetails )
 
-            return self.view.index(mailList, [], email2read=email2read)
 
-        @self.__app.route('/addmail')
+            email = self.emailDriver.read(
+                condition=and_(
+                    Email.emailId == emailId, Email.login + '@' + Email.domain == mail
+                )
+            )
+
+            emailPage = self.view.getEmailTemplate(
+                self.__app.jinja_env, email
+            )
+
+            return send_file(
+                BytesIO(emailPage.encode('utf-8')),
+                as_attachment=True,
+                download_name=f"email {email.emailId}.html"
+            )
+
+
+        @self.__app.route('/mail/add', methods=['POST'])
         def addMail():
             mail = self.tempMailClient.getRandomMail(count=1)
-            self.databaseDriver.create(mail)
+
+            if type(mail) == list:
+                return Response(status=502)
+
+            self.mailDriver.create(mail)
 
             return Response(status=200)
 
-        @self.__app.route('/deletemail')
+        @self.__app.route('/mail/delete', methods=['POST'])
         def deleteMail():
             mail = request.args.get('mail')
 
-            self.databaseDriver.delete(
-                self.databaseDriver.read(MAIL=mail).id
-            )
+            if mail == 'all':
+                for mail in self.mailDriver.read():
+                    self.mailDriver.delete(mail.id)
+            else:
+                if mail is None: return Response(status=400)
+
+                self.mailDriver.delete(
+                    self.mailDriver.read(MAIL=mail).id
+                )
 
             return Response(status=200)
+
+        @self.__app.route('/email/delete', methods=['POST'])
+        def deleteEmail():
+            emailId = request.args.get('id')
+
+            if emailId is None: return Response(status=400)
+
+            self.emailDriver.delete(int(emailId))
+
+            return Response(status=200)
+
+
+

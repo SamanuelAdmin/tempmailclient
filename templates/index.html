@@ -1,48 +1,67 @@
 {% extends 'base.html' %}
 
-{% block body %}
-    <div class="mailbox">
-        {% if email2read %}
-            <div class="letter">
-                <div class="from">{{ email2read.frommail }} to {{ email2read.login }}@{{ email2read.domain }}</div>
-                <div class="subject">{{ email2read.subject }}</div>
-                <div class="subject">{{ email2read.body }}</div>
-            </div>
-        {% else %}
-            <div class="count">You have {{ emailsCount }} in the mailbox.</div>
+{% block content %}
 
-            {% for email in emailList %}
-                <a class="email" href="/read?mail={{ email.login }}@{{ email.domain }}&id={{ email.ID }}">
-                    <div class="date">{{ email.date }}</div>
-                    <div class="mail">{{ email.login }}@{{ email.domain }}</div>
-                    <div class="from">{{ email.frommail }}</div>
-                    <div class="subject">{{ email.subject }}</div>
-                </a>
-            {% endfor %}
-        {% endif %}
-    </div>
+    <div class="main-page">
+        <table class="emailbox-table">
 
-    <div class="mail-list">
-        {% if mailsCount != 0 %}
-            <div class="title">
-                Available Emails:
-            </div>
+            <thead class="head">
+                <tr>
+                    <th></th>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Subject</th>
+                </tr>
+            </thead>
 
-            <a class="view-from-all-button" href="/" onclick="loadingMessage();">View from all</a>
+            <tbody class="body">
+                {% for email in emailList %}
+                    <tr class="email-note">
+                        <td>
+                            <a
+                                    class="download"
+                                    href="/email/download?mail={{ email.login }}@{{ email.domain }}&id={{ email.emailId }}"
+                            >GET</a>
 
-            <div class="mails">
+                            <a
+                                    class="delete"
+                                    onclick="deleteEmail('{{ email.emailId }}');"
+                            >DEl</a>
+                        </td>
+                        <td class="date">{{ email.date }}</td>
+                        <td>{{ email.frommail }}</td>
+                        <td>{{ email.login }}@{{ email.domain }}</td>
+                        <td class="subject long-text-container">{{ email.subject }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <div class="mailbox-list">
+            <div class="list">
                 {% for mail in mailList %}
                     <div class="mail">
-                        <a class="mail
-                           {% if mail.mail == choosen %}choosen{% endif %}"
-                           href="?from={{ mail.mail }}" onclick="loadingMessage();"
-                        >{{ mail.mail }}</a>
-                        <button class="delete-mail" onclick="deleteMail('{{ mail.mail }}')">X</button>
+                        <div class="mail-text">{{ mail.mail }}</div>
+                        <button class="delete-mail" onclick="deleteMailFromList('{{ mail.mail }}');">X</button>
                     </div>
                 {% endfor %}
             </div>
-        {% endif %}
 
-        <button class="add-mail" onclick="addMail()">Add mail</button>
+            <div class="buttons">
+                <button
+                        class="add-mail-button" id="addmailbutton"
+                        onclick="addMailToList();">
+                    Add
+                </button>
+
+                <button
+                        class="delete-all-mails-button" id="deleteallmailsbutton"
+                        onclick="deleteAllMails();">
+                    Delete all
+                </button>
+            </div>
+        </div>
     </div>
+
 {% endblock %}

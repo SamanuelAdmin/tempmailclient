@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <style>
+            .info-field {
+                font-size: 16px;
+                padding: 5px;
+            }
+
+            .info-field:hover {
+                border: 1px solid gray;
+            }
+
+            .content {
+                margin-top: 10px;
+                padding: 10px;
+                border: 1px solid gray;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="info-field">{{ email.date }}</div>
+        <div class="info-field">From: {{ email.frommail }}</div>
+        <div class="info-field">To: {{ email.login }}@{{ email.domain }}</div>
+        <div class="info-field">Subject: {{ email.subject }}</div>
+
+        {% if email.htmlBody %}
+            <div class="content">{{ email.htmlBody | safe }}</div>
+        {% else %}
+            <div class="info-field">Message:<br> {{ email.textBody }}</div>
+        {% endif %}
+    </body>
+
+</html>

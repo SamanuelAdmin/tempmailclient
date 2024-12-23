@@ -1,137 +1,193 @@
+:root {
+    --background-color: #37393A;
+    --text-color: #FFFFFF;
+    --spec-text-color: #FAF33E;
+    --act-button-color: #00A400;
+    --dis-button-color: #A40000;
+    --border-color: #034732;
+    --transparent: rgba(0, 0, 0, 0);
+}
+
+@font-face {
+    font-family: 'MainFont';
+    src: url('/static/fonts/Glitford-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+button:hover {
+    cursor: pointer !important;
+}
+
+
 * {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
 }
 
-a {
-    text-decoration: none;
-    color: darkred;
+body {
+    background-color: var(--background-color);
+    font-family: 'MainFont', sans-serif;
+    letter-spacing: 2px;
 }
 
-.loading-screen {
-    background: darkgrey;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-
-    p {
-        font-size: 74px;
-        font-weight: bold;
-    }
-}
-
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    * {
-        width: 100% !important;
-        max-width: 1200px !important;
-    }
-}
-
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-
-    .title {
-        font-size: 36px;
-        text-align: center;
-    }
-}
 
 .content {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    margin-top: 50px;
-    gap: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .mailbox {
-        display: flex;
-        gap: 10px;
-        flex-direction: column;
-        align-items: flex-start;
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
 
-        .email {
-            display: flex;
-            justify-content: flex-start;
-            gap: 20px;
-        }
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .title {
+        color: var(--text-color);
+        font-size: 32px;
+        font-weight: 600;
     }
+}
 
-    .mail-list {
-        max-width: 300px;
-        width: auto;
-        padding-right: 10px;
+.main-page {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 8fr 3fr;
+    column-gap: 20px;
+    border-top: 1px black solid;
+    padding-top: 5px;
 
-        .title {
-            font-weight: 700;
-            font-size: 18px;
+    .emailbox-table {
+        align-self: flex-start;
+        color: var(--text-color);
+        border-spacing: 5px 5px;
+
+        .head {
+            color: var(--spec-text-color);
         }
 
-        .view-from-all-button {
-            font-weight: 600;
-            padding: 10px !important;
-            padding-top: 20px !important;
-            padding-bottom: 20px !important;
-        }
+        .body {
+            padding-top: 10px;
 
-        .mails {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
+            .email-note {
+                max-width: 100%;
 
-            .mail {
-                padding-top: 3px;
-                padding-bottom: 3px;
-                color: darkblue;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                .mail {
-
+                .download {
+                    color: var(--act-button-color);
+                    background-color: var(--transparent);
+                    font-size: 16px;
                 }
 
-                .delete-mail {
-                    font-weight: bold;
-                    font-size: 18px;
-                    width: 20px !important;
-                    background-color: rgba(0, 0, 0, 0);
-                    border-color: rgba(0, 0, 0, 0);
-                }
-
-                .delete-mail:hover {
+                .download:hover {
                     cursor: pointer;
                 }
 
-                .choosen {
-                    color: brown;
+                .delete {
+                    color: var(--dis-button-color);
+                    background-color: var(--transparent);
+                    font-size: 16px;
+                }
+
+                .delete:hover {
+                    cursor: pointer;
+                }
+
+
+                .date {
+                    text-align: center;
+                }
+
+                .subject {
+                    max-width: 200px !important;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 
+            .email-note:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .mailbox-list {
+        .list {
+            padding-bottom: 30px;
+
+            .mail {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+                padding-top: 4px;
+                padding-bottom: 5px;
+
+                .mail-text {
+                    color: var(--spec-text-color);
+                    font-size: 17px;
+                }
+
+                .delete-mail {
+                    font-size: 18px;
+                    color: var(--dis-button-color);
+                    background-color: var(--transparent);
+                    border-color: var(--transparent);
+                    font-weight: bold;
+                    padding-left: 3px;
+                    padding-right: 3px;
+                }
+            }
+
+            .mail:hover {
+                border-bottom: 1px var(--text-color) solid;
+            }
+        }
+
+        .buttons {
+            display: grid;
+            column-gap: 10px;
+            grid-template-columns: 1fr 1fr;
+            padding-left: 10px;
+            padding-right: 10px;
+
+            .add-mail-button {
+                font-size: 15px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                background-color: var(--transparent);
+                border: 2px var(--act-button-color) solid;
+                border-radius: 4px;
+                color: var(--act-button-color);
+            }
+
+            .delete-all-mails-button {
+                font-size: 15px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                background-color: var(--transparent);
+                border: 2px var(--dis-button-color) solid;
+                border-radius: 4px;
+                color: var(--dis-button-color);
+            }
         }
     }
 }
 
 
-.footer {
-    position: absolute;
-    bottom: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    * {
-        text-align: center;
-    }
-}

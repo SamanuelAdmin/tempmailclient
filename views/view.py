@@ -1,4 +1,7 @@
+import jinja2
 from flask import render_template
+
+from models.email_description import EmailDesc
 
 
 class View:
@@ -15,3 +18,12 @@ class View:
             choosen=choosen,
             email2read=email2read
         )
+
+    def getEmailTemplate(self, env: jinja2.Environment, email: EmailDesc):
+        template = env.get_template(
+            'email_page.html'
+        )
+
+        return template.render( email=email )
+
+
