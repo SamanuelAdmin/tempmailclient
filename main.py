@@ -14,4 +14,4 @@ class MainApp(Flask):
 
 if __name__ == '__main__':
     # only for tests
-    MainApp(**APP_CONFIGS).run()
+    MainApp().run(**APP_CONFIGS)
