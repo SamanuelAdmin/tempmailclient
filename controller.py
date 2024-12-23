@@ -33,7 +33,7 @@ class Controller:
         ).start()
 
 
-    def updateEmailData(self, timeout=10):
+    def updateEmailData(self, timeout=UPDATE_TIMEOUT):
         while True:
             mailList = self.mailDriver.read()
 

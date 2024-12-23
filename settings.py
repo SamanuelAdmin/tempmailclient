@@ -7,4 +7,4 @@ APP_CONFIGS = {
 
 }
 
-DATABASE_FILENAME = os.path.join(ROOT_DIR, 'database.db')
+UPDATE_TIMEOUT = 30 # timeout before every email database update
