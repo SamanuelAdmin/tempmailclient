@@ -24,11 +24,7 @@
         <div class="info-field">To: {{ email.login }}@{{ email.domain }}</div>
         <div class="info-field">Subject: {{ email.subject }}</div>
 
-        {% if email.htmlBody %}
-            <div class="content">{{ email.htmlBody | safe }}</div>
-        {% else %}
-            <div class="info-field">Message:<br> {{ email.textBody }}</div>
-        {% endif %}
+        <div class="content">{{ email.body | safe }}</div>
     </body>
 
 </html>

@@ -38,10 +38,14 @@ class Controller:
             mailList = self.mailDriver.read()
 
             for mail in mailList:
-                for data in self.tempMailClient.checkMailbox(mail.mail):
-                    email = EmailDesc(mail.mail, data)
+                for emailBoxData in self.tempMailClient.checkMailbox(mail.mail):
+                    emailId = emailBoxData.get('id')
+                    if emailId is None: continue
 
-                    if self.emailDriver.read(emailId=email.emailId) is None: # if it is new email
+                    if self.emailDriver.read(emailId=emailId) is None: # if it is new email
+                        emailData = self.tempMailClient.readMessage(mail.mail, int(emailId))
+                        email = EmailDesc(mail.mail, emailData)
+
                         print(f'Saving new email with ID {email.emailId}.')
                         self.emailDriver.create(email)
 
@@ -65,7 +69,6 @@ class Controller:
 
             if emailId is None or mail is None:
                 return Response(status=400)
-
 
 
             email = self.emailDriver.read(

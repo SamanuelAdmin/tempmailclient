@@ -7,5 +7,6 @@ class EmailDesc:
 
         self.textBody = emailData.get('textBody')
         self.htmlBody = emailData.get('htmlBody')
+        self.body = emailData.get('body')
 
         self.login, self.domain = mail.split('@')

@@ -12,12 +12,18 @@ class EmailDriver(Driver, IDatabaseDriver):
 
     @checkConnection
     def create(self, email, commit=True):
+        emailBody = ''
+
+        if email.htmlBody: emailBody = email.htmlBody
+        if email.body:
+            emailBody += f'<div>{email.body.replace('\n', "\n<br>")}</div>'
+
         newEmail = Email(
             int(email.emailId),
             email.frommail,
             email.subject,
             email.date,
-            email.htmlBody,
+            emailBody,
             email.login, email.domain
         )
 
