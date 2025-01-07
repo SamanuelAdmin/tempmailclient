@@ -12,7 +12,11 @@ another hacker`s side.
 
 
 <br>
-<h3>Has been used:</h3>
+<h3>Stable versions</h3>
+<li><a href="https://github.com/SamanuelAdmin/tempmailclient/releases/tag/v1.0">Pre-reliase v1.0</a></li>
+
+<br>
+<h3>Has been used</h3>
 <li><a href="https://python.org">Python >= 3.10</a></li>
 <li><a href="https://flask.palletsprojects.com/en/stable/">Flask == 3.1.0</a></li>
 <li><a href="https://www.sqlite.org/">SQLite</a> with <a href="https://www.sqlalchemy.org/">Sqlalchemy ORM</a></li>
@@ -20,7 +24,7 @@ another hacker`s side.
 Also <a href="https://pypi.org/project/fake-useragent/">FakeUseragent</a>, <a href="https://pypi.org/project/Jinja2/">Jinja2</a> and <a href="https://pypi.org/project/requests/">Requests</a>.
 
 <br><br>
-<h3>How to set up and use:</h3>
+<h3>How to set up and use</h3>
 
 <ul>
 
