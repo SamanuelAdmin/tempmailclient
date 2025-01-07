@@ -1,0 +1,4 @@
+{
+  "_comment": "Saving messages dir, can be full path or \"delault\"",
+  "download_path": "default"
+}
