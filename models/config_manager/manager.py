@@ -3,6 +3,8 @@ from datetime import datetime
 
 from django.db.models import Manager
 from django.db.models.expressions import result
+from django.template.context_processors import static
+from sqlalchemy.orm.base import state_class_str
 from sqlalchemy.testing.suite.test_reflection import users
 
 
@@ -64,7 +66,7 @@ class EmptyConfigsException(Exception):
     pass
 
 
-def checkConfigsIsEmpty(configs):
+def checkConfigsIsEmptyDec(configs):
     def decorator(func):
         def wrapper(*args, **kwargs):
             if configs != {}:
@@ -75,10 +77,14 @@ def checkConfigsIsEmpty(configs):
 
     return decorator
 
+def checkConfigsIsEmptyFunc(configs):
+    if configs == {}:
+        raise EmptyConfigsException()
+
 
 
 class UserConfigsManager:
-    __configFilePath = ''
+    __configFilePath = 'test_configs.json'
     __configs = {}
     __cls = None
 
@@ -88,12 +94,13 @@ class UserConfigsManager:
 
         return cls.__cls
 
-    def __init__(self, configFilePath, autoLoad=False):
-        self.__configFilePath = configFilePath
+    @classmethod
+    def init(cls, configFilePath: str|None=None, autoLoad=False):
+        if configFilePath:
+            cls.__configFilePath = configFilePath
 
         if autoLoad:
-            self.loadUserConfigs()
-
+            cls.loadUserConfigs()
 
     @classmethod
     def loadUserConfigs(cls):
@@ -102,9 +109,11 @@ class UserConfigsManager:
             except Exception as err:
                 print(f'[{str(datetime.now())[:-7]}] Cannot load user configs from JSON file {cls.__configFilePath} by \n{err}')
 
+
     @classmethod
-    @checkConfigsIsEmpty(__configs)
     def saveUserConfigs(cls):
+        checkConfigsIsEmptyFunc(cls.__configs)
+
         formatedConfigString = json2StringFormate(cls.__configs)
 
         with open(cls.__configFilePath, "w") as configsFile:
@@ -113,13 +122,15 @@ class UserConfigsManager:
         print(f'[{str(datetime.now())[:-7]}] User configs has been saved.')
 
     @classmethod
-    @checkConfigsIsEmpty(__configs)
     def getUserConfig(cls, name: str) -> str|int|dict|list:
+        checkConfigsIsEmptyFunc(cls.__configs)
+
         return cls.__configs.get(name)
 
     @classmethod
-    @checkConfigsIsEmpty(__configs)
     def setUserConfig(cls, name: str, value: str|int|dict|list) -> None:
+        checkConfigsIsEmptyFunc(cls.__configs)
+
         print(f'[{str(datetime.now())[:-7]}] Set/change user config [{name}] to {value}')
         cls.__configs[name] = value
 
@@ -127,34 +138,12 @@ class UserConfigsManager:
 
 # test formatter and UserConfigsManager
 if __name__ == '__main__':
-    # testDict = {
-    #     'key1': 'value1',
-    #     'key2': 235345,
-    #     'key3': {
-    #         'key4': 'value4',
-    #         'key5': 'value5',
-    #         'key6': {
-    #             'key7': 'value7',
-    #             'key8': 'value8',
-    #         },
-    #         'key9': [1, 2, 3, 4],
-    #         'key10': 'test'
-    #     }
-    # }
-    #
-    # print(
-    #     json2StringFormate(
-    #         testDict,
-    #     )
-    # )
-
     # singleton test
-    ucm1 = UserConfigsManager('')
-    ucm2 = UserConfigsManager('')
+    ucm1 = UserConfigsManager(autoLoad=True)
+    ucm2 = UserConfigsManager()
 
     if id(ucm1) == id(ucm2): print('Class is singleton')
 
-    ucm1._UserConfigsManager__configs = {'some': 1}
     ucm1.setUserConfig('test', True)
 
     print(

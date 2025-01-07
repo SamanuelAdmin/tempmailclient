@@ -1,6 +1,6 @@
 from flask import Flask
 
-from settings import APP_CONFIGS
+from settings import *
 from controller import Controller
 
 
