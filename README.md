@@ -13,7 +13,6 @@ another hacker`s side.
 
 <br>
 <h3>Stable versions</h3>
-<p>Last is 1.0</p>
 <li><a href="https://github.com/SamanuelAdmin/tempmailclient/releases/tag/v1.0">Pre-reliase v1.0</a></li>
 
 <br>
