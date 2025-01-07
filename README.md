@@ -30,7 +30,7 @@ Also <a href="https://pypi.org/project/fake-useragent/">FakeUseragent</a>, <a hr
 
 <li><strong>Download and install docker</strong> (or/and docker desktop) from <a href="https://www.docker.com/">official website</a>.</li>
 <li>Run terminal (For windows - <code>Win+R</code> -> <code>cmd</code>).</li>
-<li>Download project source code by <code>git clone https://github.com/SamanuelAdmin/tempmailclient</code></li>
+<li>Download project code from last release (stable version).</li>
 <li>Change current directory (<code>cd tempmailclient</code>)</li>
 <li>Make docker image via <code> docker image build -t temp_mail_client . </code></li>
 <li>Start docker container with command <code>docker run -p 4999:4999 -d temp_mail_client</code></li>
